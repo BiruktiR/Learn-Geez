@@ -141,15 +141,9 @@ const Register = ({ history }) => {
   return (
         <div>
         <Slider />
-        <SignUp 
-             name={username} 
-             setName={setUsername} 
-             email={email}
-             password={password} 
-             setEmail={setEmail} 
-             setPassword={setPassword} 
-             registerHandler={registerHandler}
-       />  
+        
+          
+       
       <form onSubmit={registerHandler}>
         <h1>Register</h1>
         {error && {error}}

@@ -27,7 +27,7 @@ function App () {
         <Header />
         <div className='main-wrapper'>
           <Switch>
-            <PrivateRoute exact path="/" component={PrivateScreen} />
+         
             <Route exact path='/'>
               <Home />
             </Route>
@@ -45,7 +45,9 @@ function App () {
             </Route>
             <Route path='/register'>
               <Register/>
+
             </Route>
+               <PrivateRoute exact path="/" component={PrivateScreen} />
             <Route path='/forgotpassword'>
               <ForgotPasswordScreen/>
             </Route>
