@@ -40,6 +40,7 @@ function App () {
             <Route path='/contact'>
               <Contact />
             </Route>
+             <PrivateRoute exact path="/" component={PrivateScreen} />
             <Route path='/login'>
               <Login/>
             </Route>
@@ -47,7 +48,7 @@ function App () {
               <Register/>
 
             </Route>
-               <PrivateRoute exact path="/" component={PrivateScreen} />
+              
             <Route path='/forgotpassword'>
               <ForgotPasswordScreen/>
             </Route>

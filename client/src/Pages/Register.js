@@ -119,11 +119,11 @@ const Register = ({ history }) => {
     try {
       const { data } = await axios.post(
         "/api/auth/register",
-        {
+        ({
           username,
           email,
           password,
-        },
+        }),
         config
       );
 
