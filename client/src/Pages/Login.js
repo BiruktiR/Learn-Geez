@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-
 import axios from "axios";
-import { Link } from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
+import Box from '@mui/material/Box';
 //import "./LoginScreen.css";
 //import React, { useState } from 'react'
 import Intro from "../components/Intro";
@@ -15,6 +15,13 @@ import Counter from "../components/Counter";
 import About from "../components/About";
 
 import SignIn from '../components/LoginForm';
+import {Container, Grid, Stack, TextField} from "@mui/material";
+import * as PropTypes from "prop-types";
+const config = {
+  header: {
+    "Content-Type": "application/json",
+  },
+};
 
 
 
@@ -23,18 +30,14 @@ import SignIn from '../components/LoginForm';
 // const Login = () => {
 //     const [email, setEmail] = useState('')
 //     const [password, setPassword] = useState('')
-
 //     const loginUser = async (event) => {
 //         event.preventDefault()
-
 //         // const body = {
 //         //     email: email,
 //         //     password: password
 //         // }
-
 //         // const response = await axios.post('http://localhost:5000/login', body)
 //         // const data = await response.data
-
 //         const response = await fetch('http://localhost:5000/login', {
 // 			method: 'POST',
 // 			headers: {
@@ -45,9 +48,7 @@ import SignIn from '../components/LoginForm';
 // 				password,
 // 			}),
 // 		})
-
 // 		const data = await response.json()
-
 //         if (data.user) {
 //             localStorage.setItem('token', data.user)
 //             alert('Login successful')
@@ -56,10 +57,7 @@ import SignIn from '../components/LoginForm';
 //             alert('Wrong User credentials')
 //         }
 //     }
-
-
 //     return (
-
 //       <>
 //       <Slider />
 //       <SignIn 
@@ -71,10 +69,14 @@ import SignIn from '../components/LoginForm';
 //       />  
 //       </>
 
-   
 
+function Item(props) {
+  return null;
+}
 
-const Login = ({ history }) => {
+Item.propTypes = {children: PropTypes.node};
+const Login = () => {
+  let history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -88,11 +90,6 @@ const Login = ({ history }) => {
   const loginHandler = async (e) => {
     e.preventDefault();
 
-    const config = {
-      header: {
-        "Content-Type": "application/json",
-      },
-    };
 
     try {
       const { data } = await axios.post(
@@ -100,12 +97,11 @@ const Login = ({ history }) => {
         { email, password },
         config
       );
-
       localStorage.setItem("authToken", data.token);
-
       history.push("/");
     } catch (error) {
-      setError(error.response.data.error);
+      console.log("--------->",error)
+      setError(error.message);
       setTimeout(() => {
         setError("");
       }, 5000);
@@ -113,49 +109,97 @@ const Login = ({ history }) => {
   };
 
   return (
-    <div>
+    <>
+
       <form onSubmit={loginHandler} >
-        <h3 >Login</h3>
+
         {error && {error}}
 
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            required
-            id="email"
-            placeholder="Email address"
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-            tabIndex={1}
-          />
-        
-        
-          <label htmlFor="password">
-            Password:{" "}
-            <Link to="/forgotpassword" className="login-screen__forgotpassword">
-              Forgot Password?
-            </Link>
-          </label>
-          <input
-            type="password"
-            required
-            id="password"
-            autoComplete="true"
-            placeholder="Enter password"
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
-            tabIndex={2}
-          />
-        
-        <button type="submit" className="btn btn-primary">
-          Login
-        </button>
+          {/*<label htmlFor="email">Email:</label>*/}
+          {/*<input*/}
+          {/*  type="email"*/}
+          {/*  required*/}
+          {/*  id="email"*/}
+          {/*  placeholder="Email address"*/}
+          {/*  onChange={(e) => setEmail(e.target.value)}*/}
+          {/*  value={email}*/}
+          {/*  tabIndex={2}*/}
+          {/*/>*/}
+        {/*<input*/}
+          {/*  type="password"*/}
+          {/*  required*/}
+          {/*  id="password"*/}
+          {/*  autoComplete="false"*/}
+          {/*  placeholder="Enter password"*/}
+          {/*  onChange={(e) => setPassword(e.target.value)}*/}
+          {/*  value={password}*/}
+          {/*  tabIndex={2}*/}
+          {/*/>*/}
+        <Grid container
+              direction="column"
+              justifyContent="center"
+              alignItems="center"
+              spacing={2}
+        >
 
-        <span className="login-screen__subtext">
+
+          <Grid style={{marginTop:"100px"}} item xs={6}>
+
+            <Grid item xs={6}>
+              <h3 >Login</h3>
+            </Grid>
+            <TextField
+                required
+                id="outlined-required"
+                label="email"
+                defaultValue="email"
+                value={email}
+                onChange={(e)=>setEmail(e.target.value)}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+                id="outlined-password-input"
+                label="Password"
+                type="password"
+                autoComplete="current-password"
+                value={password}
+                onChange={(e)=>setPassword(e.target.value)}
+            />
+          </Grid>
+
+          <Grid item xs={6}>
+            <button type="submit" className="btn btn-primary">
+              Login
+            </button>
+          </Grid>
+
+          <Grid item xs={6}>
           Don't have an account? <Link to="/register">Register</Link>
-        </span>
+          </Grid>
+
+            <Grid item xs={6}>
+              <label htmlFor="password">
+                Password:{" "}
+                <Link to="/forgotpassword" className="login-screen__forgotpassword">
+                  Forgot Password?
+                </Link>
+              </label>
+          </Grid>
+
+        </Grid>
+
+
+
+        
+
+
+
+
+
       </form>
-    </div>
+
+    </>
   );
 };
 

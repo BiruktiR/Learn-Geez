@@ -17,7 +17,7 @@ import Services from './Pages/Services'
 import Contact from './Pages/Contact'
 import Login from'./Pages/Login'
 import Register from'./Pages/Register'
-
+import Dashboard from "./Pages/Dashboard/Dashboard";
 
 
 function App () {
@@ -33,6 +33,9 @@ function App () {
             </Route>
             <Route path='/about'>
               <About />
+            </Route>
+            <Route path='/dashboard'>
+              <Dashboard />
             </Route>
             <Route path='/services'>
               <Services />

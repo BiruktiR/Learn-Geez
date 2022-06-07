@@ -9,8 +9,6 @@ function Services() {
     <>
       <Banner title='Our Services'/>
       <OurServices />
-      
-    
     </>
   )
 }

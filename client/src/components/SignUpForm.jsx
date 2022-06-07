@@ -16,10 +16,10 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const theme = createTheme();
 
-export default function SignUp( { username, setUsername,email, setEmail ,password, setPassword,confirmpassword, setConfirmPassword,registerHandler  }) {
+export default function SignUp( { name,  setName,email, setEmail ,password, setPassword, confirmPassword, setConfirmPassword, registerUser  }) {
 
   return (
-      <form onSubmit={registerHandler }>
+      <form onSubmit={registerUser }>
 <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs" sx={{ mb: 1 }}>
         <CssBaseline />
@@ -48,8 +48,8 @@ export default function SignUp( { username, setUsername,email, setEmail ,passwor
                   id="name"
                   label="Full Name"
                   autoFocus
-                  value={username}
-                  onChange={(e) =>setUsername(e.target.value)}
+                  value={name}
+                  onChange={(e) =>setName(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -85,7 +85,7 @@ export default function SignUp( { username, setUsername,email, setEmail ,passwor
                   label="password"
                   name="password"
                   autoComplete="confirm-password"
-                  value={confirmpassword}
+                  value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
               </Grid>

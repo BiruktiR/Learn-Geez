@@ -2,12 +2,32 @@ import React, { useState, useEffect } from 'react'
 import  { FaPhone, FaEnvelope, FaGlobe, FaBars, FaAngleRight } from 'react-icons/fa'
 import  { TiSocialFacebook, TiSocialTwitter, TiSocialGithub } from 'react-icons/ti'
 import {
-  Link
+  Link, Redirect
 } from "react-router-dom";
- // this is header page 
+import {Button} from "@mui/material";
+ // this is header page
+import {AuthContext} from "./routing/authContext";
+
 function Header () {
   const [show, setShow] = useState(false);
   const [isScroll, setIsScroll] = useState(false);
+
+  const [authenticated, setAuth]=useState(!(localStorage.getItem('authToken')))
+
+  useEffect(() => {
+    if (localStorage.getItem("authToken")) {
+      setAuth(true)
+    }
+  }, [authenticated]);
+
+  const getAuth=()=>{
+    if(localStorage.getItem("authToken")){
+      return true
+    }else {
+      return false
+    }
+  }
+
   function handleScrollUp() {
     if(window.scrollY >= 10 && !isScroll) {
       setIsScroll(true);
@@ -22,7 +42,12 @@ function Header () {
     };
   }, []);
   return (
+
     <header className='navigation '>
+      <AuthContext.Consumer>
+        {auth => (
+<>
+
       <div className='header-top d-none d-md-block d-lg-block'>
         <div className='container'>
           <div className='row justify-content-between align-items-center'>
@@ -92,21 +117,45 @@ function Header () {
                   Contact Us
                 </Link>
               </li>
-               <li className='nav-item'>
-                <Link className='nav-link' to='/login'>
-                  Login
+              <li className='nav-item'>
+                <Link className='nav-link' to='/dashboard'>
+                  DashBoard
                 </Link>
-              </li> 
-               <li className='nav-item'>
-                <Link className='nav-link' to='/register'>
-                  Register
-                </Link>
-              </li> 
+              </li>
+
+              {
+
+                !authenticated? (
+                  <>
+                    <li className='nav-item'>
+                      <Link className='nav-link' to='/login'>
+                        Login
+                      </Link>
+                    </li>
+                    <li className='nav-item'>
+                      <Link className='nav-link' to='/register'>
+                        Register
+                      </Link>
+                    </li>
+                  </>
+              ) : (
+                  <li className='nav-item'>
+                    <Button variant="outlined" onClick={()=>{
+                      localStorage.removeItem("authToken")
+                      setAuth(false)
+                    }}>Logout</Button>
+                  </li>
+              )}
+
+
+
             </ul>
             </div>
         </div>
       </nav>
-    </header>
+  </> )}
+        </AuthContext.Consumer>
+      </header>
   )
 }
 

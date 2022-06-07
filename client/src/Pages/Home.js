@@ -19,7 +19,6 @@ function Home() {
         <Blog />
       <Services />
       <Price />
-      
     </>
   )
 }
